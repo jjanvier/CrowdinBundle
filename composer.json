@@ -1,0 +1,26 @@
+{
+    "name": "jjanvier/crowdin-bundle",
+    "type": "symfony-bundle",
+    "description": "Manage Crowdin translations via Symfony2 commands.",
+    "keywords": ["crowdin", "translating", "localization"],
+    "homepage": "https://github.com/jjanvier/CrowdinBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Julien Janvier",
+            "homepage": "https://github.com/jjanvier"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "~2.3",
+        "akeneo/crowdin-api":       "*@dev"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": { "Jjanvier\\Bundle\\CrowdinBundle\\": "" }
+    },
+    "target-dir": "Jjanvier/Bundle/CrowdinBundle"
+}
