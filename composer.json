@@ -14,7 +14,7 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/framework-bundle": "~2.3",
-        "akeneo/crowdin-api":       "1.0.x-dev@dev"
+        "akeneo/crowdin-api":       "1.0.*@dev"
     },
     "config": {
         "bin-dir": "bin"
