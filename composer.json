@@ -22,5 +22,6 @@
     "autoload": {
         "psr-0": { "Jjanvier\\Bundle\\CrowdinBundle\\": "" }
     },
-    "target-dir": "Jjanvier/Bundle/CrowdinBundle"
+    "target-dir": "Jjanvier/Bundle/CrowdinBundle",
+    "minimum-stability": "dev"
 }
