@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Jjanvier\Bundle\CrowdinBundle\Command\Crowdin;
+namespace Jjanvier\Bundle\CrowdinBundle\Command\Api;
 
 use Crowdin\Api\DeleteFile;
 use Symfony\Component\Console\Input\InputArgument;
@@ -22,12 +22,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Julien Janvier <j.janvier@gmail.com>
  */
-class FileDeleteCommand extends AbstractCommand
+class FileDeleteCommand extends AbstractApiCommand
 {
     protected function configure()
     {
         $this
-            ->setName('crowdin:delete-file')
+            ->setName('crowdin:api:delete-file')
             ->setDescription('Delete a file from the Crowdin project. All the translations will be lost without ability to restore them.')
             ->addArgument('file', InputArgument::REQUIRED, 'File you want to delete.')
         ;

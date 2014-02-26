@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Jjanvier\Bundle\CrowdinBundle\Command\Crowdin;
+namespace Jjanvier\Bundle\CrowdinBundle\Command\Api;
 
 use Crowdin\Api\DeleteDirectory;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,12 +21,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Julien Janvier <j.janvier@gmail.com>
  */
-class DirectoryDeleteCommand extends AbstractCommand
+class DirectoryDeleteCommand extends AbstractApiCommand
 {
     protected function configure()
     {
         $this
-            ->setName('crowdin:delete-directory')
+            ->setName('crowdin:api:delete-directory')
             ->setDescription('Deletes a Crowdin project directory. All nested files and directories will be deleted too.')
             ->addArgument('directory', InputArgument::REQUIRED, 'Directory path you want to delete.');
         ;

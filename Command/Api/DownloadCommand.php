@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Jjanvier\Bundle\CrowdinBundle\Command\Crowdin;
+namespace Jjanvier\Bundle\CrowdinBundle\Command\Api;
 
 use Crowdin\Api\Download;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,12 +21,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Julien Janvier <j.janvier@gmail.com>
  */
-class DownloadCommand extends AbstractCommand
+class DownloadCommand extends AbstractApiCommand
 {
     protected function configure()
     {
         $this
-            ->setName('crowdin:download')
+            ->setName('crowdin:api:download')
             ->setDescription('Download last package from Crowdin.')
             ->addOption('path', 'p', InputOption::VALUE_REQUIRED, 'Path where you want to download the zip.', '/tmp/crowdin')
             ->addOption('language', 'l', InputOption::VALUE_REQUIRED, 'Language you want to download.', 'all')

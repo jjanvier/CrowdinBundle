@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Jjanvier\Bundle\CrowdinBundle\Command\Crowdin;
+namespace Jjanvier\Bundle\CrowdinBundle\Command\Api;
 
 use Crowdin\Api\AddFile;
 use Symfony\Component\Console\Input\InputArgument;
@@ -22,12 +22,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Julien Janvier <j.janvier@gmail.com>
  */
-class FileAddCommand extends AbstractCommand
+class FileAddCommand extends AbstractApiCommand
 {
     protected function configure()
     {
         $this
-            ->setName('crowdin:add-file')
+            ->setName('crowdin:api:add-file')
             ->setDescription('Add a new file to the Crowdin project. ')
             ->addArgument('file', InputArgument::REQUIRED, 'File you want to add.')
             ->addArgument('crowndinPath', InputArgument::REQUIRED, 'Crowdin path where you want to add the file.')

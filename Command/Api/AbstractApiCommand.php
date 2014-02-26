@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Jjanvier\Bundle\CrowdinBundle\Command\Crowdin;
+namespace Jjanvier\Bundle\CrowdinBundle\Command\Api;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Crowdin\Client;
@@ -19,7 +19,7 @@ use Crowdin\Client;
  *
  * @author Julien Janvier <j.janvier@gmail.com>
  */
-abstract class AbstractCommand extends ContainerAwareCommand
+abstract class AbstractApiCommand extends ContainerAwareCommand
 {
     const ERROR_GENERIC = -1;
 

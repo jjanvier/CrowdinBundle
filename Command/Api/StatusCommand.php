@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Jjanvier\Bundle\CrowdinBundle\Command\Crowdin;
+namespace Jjanvier\Bundle\CrowdinBundle\Command\Api;
 
 use Crowdin\Api\Status;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,12 +20,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Julien Janvier <j.janvier@gmail.com>
  */
-class StatusCommand extends AbstractCommand
+class StatusCommand extends AbstractApiCommand
 {
     protected function configure()
     {
         $this
-            ->setName('crowdin:status')
+            ->setName('crowdin:api:status')
             ->setDescription('Crowdin project progress by language.')
         ;
     }

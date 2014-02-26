@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Jjanvier\Bundle\CrowdinBundle\Command\Crowdin;
+namespace Jjanvier\Bundle\CrowdinBundle\Command\Api;
 
 use Crowdin\Api\UploadTranslation;
 use Symfony\Component\Console\Input\InputArgument;
@@ -17,12 +17,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class UploadTranslationCommand extends AbstractCommand
+class UploadTranslationCommand extends AbstractApiCommand
 {
     protected function configure()
     {
         $this
-            ->setName('crowdin:upload')
+            ->setName('crowdin:api:upload')
             ->setDescription('Upload latest version of your localization files to Crowdin.')
             ->addArgument('locale', InputArgument::REQUIRED, 'Locale of your translations.')
             ->addArgument('file', InputArgument::REQUIRED, 'Crowdin file you want to upload translations for.')

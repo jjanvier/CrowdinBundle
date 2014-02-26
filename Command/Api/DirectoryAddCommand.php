@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Jjanvier\Bundle\CrowdinBundle\Command\Crowdin;
+namespace Jjanvier\Bundle\CrowdinBundle\Command\Api;
 
 use Crowdin\Api\AddDirectory;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,12 +21,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Julien Janvier <j.janvier@gmail.com>
  */
-class DirectoryAddCommand extends AbstractCommand
+class DirectoryAddCommand extends AbstractApiCommand
 {
     protected function configure()
     {
         $this
-            ->setName('crowdin:add-directory')
+            ->setName('crowdin:api:add-directory')
             ->setDescription('Add a directory to the Crowdin project.')
             ->addArgument('directory', InputArgument::REQUIRED, 'Directory path you want to add.');
         ;

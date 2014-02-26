@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Jjanvier\Bundle\CrowdinBundle\Command\Translation;
+namespace Jjanvier\Bundle\CrowdinBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -27,7 +27,7 @@ class ExtractCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('translations:crowdin:extract')
+            ->setName('crowdin:extract')
             ->setDescription('Retrieve translations of your project and extract them.')
             ->addOption('path', 'p', InputOption::VALUE_REQUIRED, 'Path where you want to extract your translations.', '/tmp/crowdin')
             ->addOption('language', 'l', InputOption::VALUE_REQUIRED, 'Language you want to extract.', 'all')
@@ -62,7 +62,7 @@ class ExtractCommand extends ContainerAwareCommand
     {
         $command = $this->getApplication()->find('crowdin:export');
         $arguments = array(
-            'command' => 'crowdin:export'
+            'command' => 'crowdin:api:export'
         );
         $input = new ArrayInput($arguments);
 
@@ -73,7 +73,7 @@ class ExtractCommand extends ContainerAwareCommand
     {
         $command = $this->getApplication()->find('crowdin:download');
         $arguments = array(
-            'command' => 'crowdin:download',
+            'command' => 'crowdin:api:download',
             '--path' => $input->getOption('path'),
             '--language' => $input->getOption('language'),
         );
