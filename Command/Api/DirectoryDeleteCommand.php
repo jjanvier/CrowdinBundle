@@ -27,7 +27,7 @@ class DirectoryDeleteCommand extends AbstractApiCommand
     {
         $this
             ->setName('crowdin:api:delete-directory')
-            ->setDescription('Deletes a Crowdin project directory. All nested files and directories will be deleted too.')
+            ->setDescription('Delete a Crowdin project directory. All nested files and directories will be deleted too.')
             ->addArgument('directory', InputArgument::REQUIRED, 'Directory path you want to delete.');
         ;
     }

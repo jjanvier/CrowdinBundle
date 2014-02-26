@@ -26,7 +26,7 @@ class StatusCommand extends AbstractApiCommand
     {
         $this
             ->setName('crowdin:api:status')
-            ->setDescription('Crowdin project progress by language.')
+            ->setDescription('Get Crowdin project progress by language.')
         ;
     }
 

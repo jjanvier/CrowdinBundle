@@ -1,7 +1,7 @@
 CrowdinBundle
 =============
 
-Manage your Crowdin translations via Symfony2 commands.
+Manage your Crowdin translations via Symfony2 commands thanks to the [akeneo/crowdin-api](https://github.com/akeneo/php-crowdin-api) library.
 
 Installation
 ------------
@@ -57,3 +57,19 @@ Add the following keys to your `parameters.yml`:
     crowdin_api_key: MY_API_KEY
     crowdin_project_identifier: MY_PROJECT_IDENTIFIER
 ```
+
+Existing commands
+-----------------
+
+* `crowdin:api:add-directory` adds a directory to the Crowdin project.
+* `crowdin:api:delete-directory` deletes a Crowdin project directory. All nested files and directories will be deleted too.
+* `crowdin:api:download` downloads last package from Crowdin.
+* `crowdin:api:export` builds a zip archive with lastest Crowdin translations. Can be invoked only once every 30 minutes.
+* `crowdin:api:add-file` adds a new file to the Crowdin project.
+* `crowdin:api:delete-file` deletes a file from the Crowdin project. All the translations will be lost without ability to restore them.
+* `crowdin:api:status` gets Crowdin project progress by language.
+* `crowdin:api:upload` uploads latest version of your localization files to Crowdin.
+* `crowdin:extract` retrieves translations of your project and extract them.
+
+
+
