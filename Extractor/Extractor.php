@@ -18,9 +18,9 @@ class Extractor implements ExtractorInterface
     /**
      * @var array|\SplFileInfo
      */
-    protected $files;
+    protected $files = array();
 
-    public function extract($archive)
+    public function extract($archive, $dest)
     {
         $zip = new \ZipArchive();
 
@@ -28,8 +28,14 @@ class Extractor implements ExtractorInterface
             throw new \Exception('Impossible to open the archive %s', $archive);
         }
 
+        $zip->extractTo($dest);
+
         for( $i = 0; $i < $zip->numFiles; $i++ ) {
-            $this->files[] = new SplFileInfo($zip->getNameIndex($i));
+            $path = sprintf('%s/%s', $dest, $zip->getNameIndex($i));
+
+            if (is_file($path)) {
+                $this->files[] = new SplFileInfo($path);
+            }
         }
 
         $zip->close();

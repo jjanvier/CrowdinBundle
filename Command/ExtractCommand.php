@@ -33,7 +33,7 @@ class ExtractCommand extends ContainerAwareCommand
             ->setDescription('Retrieve translations of your project and extract them.')
             ->addOption('path', 'p', InputOption::VALUE_REQUIRED, 'Path where you want to extract your translations.', '/tmp/crowdin')
             ->addOption('language', 'l', InputOption::VALUE_REQUIRED, 'Language you want to extract.', 'all')
-            ->addOption('header', 'h', InputOption::VALUE_REQUIRED, 'Custom header you want to add to your translations.')
+            ->addOption('header', 't', InputOption::VALUE_REQUIRED, 'Custom header you want to add to your translations.')
             ->addOption('clean', 'c', InputOption::VALUE_NONE, 'If you want to clean Crowdin files.')
         ;
     }
@@ -53,7 +53,7 @@ class ExtractCommand extends ContainerAwareCommand
         $archive = sprintf('%s/%s', $path, $file);
 
         $extractor = new Extractor();
-        $translations = $extractor->extract($archive)->getFiles();
+        $translations = $extractor->extract($archive, $path)->getFiles();
         unlink($archive);
 
         $clean = $input->getOption('clean');
@@ -78,7 +78,7 @@ class ExtractCommand extends ContainerAwareCommand
 
     private function exportFromCrowdin(InputInterface $input, OutputInterface $output)
     {
-        $command = $this->getApplication()->find('crowdin:export');
+        $command = $this->getApplication()->find('crowdin:api:export');
         $arguments = array(
             'command' => 'crowdin:api:export'
         );
@@ -89,7 +89,7 @@ class ExtractCommand extends ContainerAwareCommand
 
     private function downloadFromCrowdin(InputInterface $input, OutputInterface $output)
     {
-        $command = $this->getApplication()->find('crowdin:download');
+        $command = $this->getApplication()->find('crowdin:api:download');
         $arguments = array(
             'command' => 'crowdin:api:download',
             '--path' => $input->getOption('path'),

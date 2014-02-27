@@ -11,7 +11,7 @@
 
 namespace Jjanvier\Bundle\CrowdinBundle\Formatter;
 
-use Symfony\Component\Finder\SplFileInfo;
+use \SplFileInfo;
 
 class FormatterFactory
 {
@@ -22,7 +22,7 @@ class FormatterFactory
             case 'yaml':
                 return new YamlFormatter();
             default:
-                throw new \Exception('File with extension %s are not handled yet.', $file->getExtension());
+                throw new \Exception(sprintf('File with extension %s are not handled yet.', $file->getExtension()));
         }
     }
 } 

@@ -17,9 +17,10 @@ interface ExtractorInterface
      * Extracts the given archive.
      *
      * @param $archive
+     * @param $dest
      * @return ExtractorInterface
      */
-    public function extract($archive);
+    public function extract($archive, $dest);
 
     /**
      * Returns the list of files contained in the archive.
