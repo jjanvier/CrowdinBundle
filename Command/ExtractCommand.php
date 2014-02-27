@@ -11,6 +11,8 @@
 
 namespace Jjanvier\Bundle\CrowdinBundle\Command;
 
+use Jjanvier\Bundle\CrowdinBundle\Extractor\Extractor;
+use Jjanvier\Bundle\CrowdinBundle\Formatter\FormatterFactory;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,14 +33,13 @@ class ExtractCommand extends ContainerAwareCommand
             ->setDescription('Retrieve translations of your project and extract them.')
             ->addOption('path', 'p', InputOption::VALUE_REQUIRED, 'Path where you want to extract your translations.', '/tmp/crowdin')
             ->addOption('language', 'l', InputOption::VALUE_REQUIRED, 'Language you want to extract.', 'all')
+            ->addOption('header', 'h', InputOption::VALUE_REQUIRED, 'Custom header you want to add to your translations.')
+            ->addOption('clean', 'c', InputOption::VALUE_NONE, 'If you want to clean Crowdin files.')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $path = $input->getOption('path');
-        $file = $input->getOption('language').'.zip';
-
         if (0 !== $returnCode = $this->exportFromCrowdin($input, $output)) {
             return $returnCode;
         }
@@ -47,15 +48,32 @@ class ExtractCommand extends ContainerAwareCommand
             return $returnCode;
         }
 
-        $zip = new \ZipArchive();
-        if (true !== $zip->open($path.'/'.$file)) {
-            $output->writeln(sprintf('<error>The zip file %s/%s can not be opened.</error>', $path, $file));
+        $path = $input->getOption('path');
+        $file = $input->getOption('language').'.zip';
+        $archive = sprintf('%s/%s', $path, $file);
+
+        $extractor = new Extractor();
+        $translations = $extractor->extract($archive)->getFiles();
+        unlink($archive);
+
+        $clean = $input->getOption('clean');
+        $header = $input->getOption('header');
+
+        if (false === $clean && null === $header) {
+           return 0;
         }
 
-        $zip->extractTo($path);
-        $zip->close();
+        foreach ($translations as $translation) {
+            $formatter = FormatterFactory::getInstance($translation);
 
-        unlink($path.'/'.$file);
+            if ($clean) {
+                $formatter->clean($translation);
+            }
+
+            if ($header) {
+                $formatter->addHeader($translation, $header);
+            }
+        }
     }
 
     private function exportFromCrowdin(InputInterface $input, OutputInterface $output)
