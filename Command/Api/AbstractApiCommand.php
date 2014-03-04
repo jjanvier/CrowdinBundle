@@ -26,12 +26,12 @@ abstract class AbstractApiCommand extends ContainerAwareCommand
     /**
      * @var Client
      */
-    private $client;
+    protected $client;
 
     /**
      * @return Client
      */
-    protected function getClient()
+    public function getClient()
     {
         if (null == $this->client) {
             $this->client = new Client(
@@ -41,5 +41,15 @@ abstract class AbstractApiCommand extends ContainerAwareCommand
         }
 
         return $this->client;
+    }
+
+    /**
+     * @param Client $client
+     */
+    public function setClient(Client $client)
+    {
+        $this->client = $client;
+
+        return $this;
     }
 } 
