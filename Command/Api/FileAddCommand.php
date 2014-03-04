@@ -30,7 +30,7 @@ class FileAddCommand extends AbstractApiCommand
             ->setName('crowdin:api:add-file')
             ->setDescription('Add a new file to the Crowdin project.')
             ->addArgument('file', InputArgument::REQUIRED, 'File you want to add.')
-            ->addArgument('crowndinPath', InputArgument::REQUIRED, 'Crowdin path where you want to add the file.')
+            ->addArgument('crowdinPath', InputArgument::REQUIRED, 'Crowdin path where you want to add the file.')
             ->addOption('exportPattern', 'p', InputOption::VALUE_REQUIRED, 'Export pattern of your file.')
             ->addOption('title', 't', InputOption::VALUE_REQUIRED, 'Title of your file.')
         ;
@@ -42,7 +42,7 @@ class FileAddCommand extends AbstractApiCommand
         $addFile = $this->getClient()->api('add-file');
         $addFile->addTranslation(
             $input->getArgument('file'),
-            $input->getArgument('crowndinPath'),
+            $input->getArgument('crowdinPath'),
             $input->getOption('exportPattern'),
             $input->getOption('title')
         );
