@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command to a build zip archive with lastest Crowdin translations. Can be invoked only once every 30 minutes.
+ * Command to a build zip archive with latest Crowdin translations. Can be invoked only once every 30 minutes.
  *
  * @author Julien Janvier <j.janvier@gmail.com>
  */
@@ -27,7 +27,7 @@ class ExportCommand extends AbstractApiCommand
     {
         $this
             ->setName('crowdin:api:export')
-            ->setDescription('Build a zip archive with lastest Crowdin translations. Can be invoked only once every 30 minutes.')
+            ->setDescription('Build a zip archive with latest Crowdin translations. Can be invoked only once every 30 minutes.')
         ;
     }
 

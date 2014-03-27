@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command to retrieve the lastest package of translations from Crowdin and extract it.
+ * Command to retrieve the latest package of translations from Crowdin and extract it.
  *
  * @author Julien Janvier <j.janvier@gmail.com>
  */
