@@ -20,7 +20,7 @@ class YamlFormatter implements FormatterInterface
         $array = file($file->getRealPath());
 
         if (count($array)) {
-            // Crowdin adds --- on the beggining of every Yaml during the export.
+            // Crowdin adds --- on the beginning of every Yaml during the export.
             if (1 === preg_match("/^---/", $array[0])) {
                 unset($array[0]);
             }
