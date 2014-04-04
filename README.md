@@ -66,6 +66,7 @@ Existing commands
 * `crowdin:api:download` downloads last package from Crowdin.
 * `crowdin:api:export` builds a zip archive with latest Crowdin translations. Can be invoked only once every 30 minutes.
 * `crowdin:api:add-file` adds a new file to the Crowdin project.
+* `crowdin:api:update-file` updates an existing file in the Crowdin project.
 * `crowdin:api:delete-file` deletes a file from the Crowdin project. All the translations will be lost without ability to restore them.
 * `crowdin:api:status` gets Crowdin project progress by language.
 * `crowdin:api:upload` uploads latest version of your localization files to Crowdin.
