@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/framework-bundle": "~2.3",
+        "symfony/framework-bundle": "~2.2",
         "akeneo/crowdin-api":       "1.0.*@dev"
     },
     "require-dev": {
