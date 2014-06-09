@@ -14,7 +14,7 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/framework-bundle": "~2.2",
-        "akeneo/crowdin-api":       "1.0.*@dev"
+        "akeneo/crowdin-api":       "*@dev"
     },
     "require-dev": {
         "phpspec/phpspec": "2.0.*@dev"
@@ -26,5 +26,5 @@
         "psr-0": { "Jjanvier\\Bundle\\CrowdinBundle\\": "" }
     },
     "target-dir": "Jjanvier/Bundle/CrowdinBundle",
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }

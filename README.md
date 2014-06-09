@@ -12,14 +12,14 @@ Use following command to add the bundle to your `composer.json` and download pac
 If you have [Composer installed globally](http://getcomposer.org/doc/00-intro.md#globally).
 
 ```bash
-    $ composer require jjanvier/crowdin-bundle:*@dev
+    $ composer require "jjanvier/crowdin-bundle":"*@dev"
 ```
 
 Otherwise you have to download .phar file.
 
 ```bash
     $ curl -sS https://getcomposer.org/installer | php
-    $ php composer.phar require janvier/crowdin-bundle:*@dev
+    $ php composer.phar require "jjanvier/crowdin-bundle":"*@dev"
 ```
 
 Adding required bundles to the kernel
