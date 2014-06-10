@@ -15,6 +15,9 @@ use \SplFileInfo;
 
 class YamlFormatter implements FormatterInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function clean(SplFileInfo $file)
     {
         $array = file($file->getRealPath());
@@ -29,11 +32,13 @@ class YamlFormatter implements FormatterInterface
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function addHeader(SplFileInfo $file, $header)
     {
         $content = file_get_contents($file->getRealPath());
         $content = $header.$content;
         file_put_contents($file->getRealPath(), $content);
     }
-
-} 
+}

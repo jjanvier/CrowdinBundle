@@ -13,6 +13,11 @@ namespace Jjanvier\Bundle\CrowdinBundle\Formatter;
 
 use \SplFileInfo;
 
+/**
+ * Class FormatterFactory
+ *
+ * Return a formatter according to a translation extension
+ */
 class FormatterFactory
 {
     public static function getInstance(SplFileInfo $file)

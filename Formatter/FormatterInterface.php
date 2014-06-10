@@ -13,10 +13,15 @@ namespace Jjanvier\Bundle\CrowdinBundle\Formatter;
 
 use \SplFileInfo;
 
+/**
+ * Interface FormatterInterface
+ *
+ * Format a translation file to our needs
+ */
 interface FormatterInterface
 {
     /**
-     * Cleans translations coming from Crowdin.
+     * Clean translations coming from Crowdin.
      *
      * @param SplFileInfo $file
      * @return mixed
@@ -24,11 +29,11 @@ interface FormatterInterface
     public function clean(SplFileInfo $file);
 
     /**
-     * Adds a header to the translations coming from Crowdin.
+     * Add a header to the translations coming from Crowdin.
      *
      * @param SplFileInfo $file
      * @param $header
      * @return mixed
      */
     public function addHeader(SplFileInfo $file, $header);
-} 
+}
