@@ -11,8 +11,8 @@
 
 namespace Jjanvier\Bundle\CrowdinBundle\Command;
 
-use Jjanvier\Bundle\CrowdinBundle\Extractor\Extractor;
-use Jjanvier\Bundle\CrowdinBundle\Formatter\FormatterFactory;
+use Jjanvier\Bundle\CrowdinBundle\Archive\Archive;
+use Jjanvier\Bundle\CrowdinBundle\Archive\ArchiveInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,6 +26,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ExtractCommand extends ContainerAwareCommand
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -38,6 +41,9 @@ class ExtractCommand extends ContainerAwareCommand
         ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (0 !== $returnCode = $this->exportFromCrowdin($input, $output)) {
@@ -48,35 +54,30 @@ class ExtractCommand extends ContainerAwareCommand
             return $returnCode;
         }
 
-        $path = $input->getOption('path');
+        $destination = $input->getOption('path');
         $file = $input->getOption('language').'.zip';
-        $archive = sprintf('%s/%s', $path, $file);
+        $archivePath = sprintf('%s/%s', $destination, $file);
 
-        $extractor = new Extractor();
-        $translations = $extractor->extract($archive, $path)->getFiles();
-        unlink($archive);
+        $archive = new Archive(
+            $archivePath,
+            $destination,
+            $input->getOption('clean'),
+            $input->getOption('header')
+        );
+        $archive->extract()->remove();
 
-        $clean = $input->getOption('clean');
-        $header = $input->getOption('header');
-
-        if (false === $clean && null === $header) {
-           return 0;
-        }
-
-        foreach ($translations as $translation) {
-            $formatter = FormatterFactory::getInstance($translation);
-
-            if ($clean) {
-                $formatter->clean($translation);
-            }
-
-            if ($header) {
-                $formatter->addHeader($translation, $header);
-            }
-        }
+        return 0;
     }
 
-    private function exportFromCrowdin(InputInterface $input, OutputInterface $output)
+    /**
+     * Generate translations package via the command crowdin:api:export
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int status of the command
+     */
+    protected function exportFromCrowdin(InputInterface $input, OutputInterface $output)
     {
         $command = $this->getApplication()->find('crowdin:api:export');
         $arguments = array(
@@ -87,7 +88,15 @@ class ExtractCommand extends ContainerAwareCommand
         return $command->run($input, $output);
     }
 
-    private function downloadFromCrowdin(InputInterface $input, OutputInterface $output)
+    /**
+     * Download the translations package via the command crowdin:api:download
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int status of the command
+     */
+    protected function downloadFromCrowdin(InputInterface $input, OutputInterface $output)
     {
         $command = $this->getApplication()->find('crowdin:api:download');
         $arguments = array(
