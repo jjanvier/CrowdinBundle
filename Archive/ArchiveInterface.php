@@ -9,18 +9,28 @@
  * file that was distributed with this source code.
  */
 
-namespace Jjanvier\Bundle\CrowdinBundle\Extractor;
+namespace Jjanvier\Bundle\CrowdinBundle\Archive;
 
-interface ExtractorInterface
+/**
+ * Interface ArchiveInterface
+ *
+ * Handle the Crowdin archive.
+ */
+interface ArchiveInterface
 {
     /**
-     * Extracts the given archive.
-     *
-     * @param $archive
-     * @param $dest
-     * @return ExtractorInterface
+     * Extracts the archive.
+
+     * @return ArchiveInterface
      */
-    public function extract($archive, $dest);
+    public function extract();
+
+    /**
+     * Remove the archive
+
+     * @return ArchiveInterface
+     */
+    public function remove();
 
     /**
      * Returns the list of files contained in the archive.
@@ -28,4 +38,4 @@ interface ExtractorInterface
      * @return array|\SplFileInfo
      */
     public function getFiles();
-} 
+}
