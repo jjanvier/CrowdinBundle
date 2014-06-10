@@ -31,8 +31,26 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('crowdin_api_key')->isRequired()->cannotBeEmpty()->end()
-                ->scalarNode('crowdin_project_identifier')->isRequired()->cannotBeEmpty()->end()
+                ->arrayNode('crowdin')
+                    ->children()
+                        ->scalarNode('api_key')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('project_identifier')->isRequired()->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
+                ->arrayNode('archive')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('path')->isRequired()->defaultValue('/tmp/crowdin')->cannotBeEmpty()->end()
+                        ->booleanNode('clean')->isRequired()->defaultFalse()->cannotBeEmpty()->end()
+                        ->scalarNode('header')->isRequired()->defaultNull()->end()
+                    ->end()
+                ->end()
+                ->arrayNode('project')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('path')->defaultNull()->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 
