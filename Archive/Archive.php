@@ -27,9 +27,14 @@ class Archive implements ArchiveInterface
     protected $path;
 
     /**
-     * @var string path the archive will be extracted
+     * @var string filename of the archive
      */
-    protected $destination;
+    protected $filename;
+
+    /**
+     * @var string path where the archive will be extracted
+     */
+    protected $extractPath;
 
     /**
      * @var bool tell if files of the archive should be cleaned after extraction
@@ -45,15 +50,22 @@ class Archive implements ArchiveInterface
      * Constructor
      *
      * @param string $path
-     * @param string $destination
+     * @param string $extractPath
      * @param bool   $clean
      * @param string $header
      */
-    public function __construct($path, $destination, $clean = false, $header = null)
+    public function __construct($path, $extractPath, $clean = false, $header = null)
     {
+        if (false === realpath($path)) {
+            throw new \Exception(sprintf('Please provide a valid path instead of %s.', $path));
+        }
+        if (false === realpath($extractPath)) {
+            throw new \Exception(sprintf('Please provide a valid path instead of %s.', $extractPath));
+        }
+
         $this->files = array();
-        $this->path = $path;
-        $this->destination = $destination;
+        $this->path = realpath($path);
+        $this->extractPath = realpath($extractPath);
         $this->header = $header;
         $this->clean = $clean;
     }
@@ -65,14 +77,19 @@ class Archive implements ArchiveInterface
     {
         $zip = new \ZipArchive();
 
-        if (true !== $zip->open($this->path)) {
-            throw new \Exception('Impossible to open the archive %s', $this->path);
+        if (null === $this->filename) {
+            throw new \Exception('Impossible to extract an archive without a filename.');
         }
 
-        $zip->extractTo($this->destination);
+        $archive = sprintf('%s/%s', $this->path, $this->filename);
+        if (true !== $zip->open($archive)) {
+            throw new \Exception(sprintf('Impossible to open the archive %s.', $archive));
+        }
+
+        $zip->extractTo($this->extractPath);
 
         for( $i = 0; $i < $zip->numFiles; $i++ ) {
-            $path = sprintf('%s/%s', $this->destination, $zip->getNameIndex($i));
+            $path = sprintf('%s/%s', $this->extractPath, $zip->getNameIndex($i));
 
             if (is_file($path)) {
                 $this->files[] = new SplFileInfo($path);
@@ -90,7 +107,11 @@ class Archive implements ArchiveInterface
      */
     public function remove()
     {
-        unlink($this->path);
+        if (null === $this->filename) {
+            throw new \Exception('Impossible to remove an archive without a filename.');
+        }
+
+        unlink(sprintf('%s/%s', $this->path, $this->filename));
 
         return $this;
     }
@@ -101,6 +122,60 @@ class Archive implements ArchiveInterface
     public function getFiles()
     {
         return $this->files;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getExtractPath()
+    {
+        return $this->extractPath;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setExtractPath($extractPath)
+    {
+        $this->extractPath = $extractPath;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFilename()
+    {
+        return $this->filename;
     }
 
     /**
