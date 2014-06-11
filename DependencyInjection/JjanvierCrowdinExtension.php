@@ -34,7 +34,7 @@ class JjanvierCrowdinExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        foreach (array('crowdin', 'archive', 'project') as $section) {
+        foreach (array('crowdin', 'archive', 'project', 'github', 'git') as $section) {
             foreach ($config[$section] as $item => $value) {
                 $container->setParameter(sprintf('jjanvier_crowdin.%s.%s', $section, $item), $value);
             }
