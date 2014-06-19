@@ -4,17 +4,17 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
     <parameters>
-        <parameter key="jjanvier_crowdin.example.class">Jjanvier\Bundle\CrowdinBundle\Example</parameter>
+        <parameter key="jjanvier_crowdin.translation.finder.class">Jjanvier\Bundle\CrowdinBundle\Translation\TranslationFinder</parameter>
+        <parameter key="jjanvier_crowdin.translation.mapper.class">Jjanvier\Bundle\CrowdinBundle\Translation\TranslationMapper</parameter>
     </parameters>
 
     <services>
-        <service id="jjanvier_crowdin.example" class="%jjanvier_crowdin.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="jjanvier_crowdin.translation.finder" class="%jjanvier_crowdin.translation.finder.class%">
+            <argument>%jjanvier_crowdin.project.path%/src/*/*/*/*/Resources/translations</argument>
+            <argument>%jjanvier_crowdin.project.default_locale%</argument>
         </service>
+
+        <service id="jjanvier_crowdin.translation.mapper" class="%jjanvier_crowdin.translation.mapper.class%" />
     </services>
-    -->
 </container>
