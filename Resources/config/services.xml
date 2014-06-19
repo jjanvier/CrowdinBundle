@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="jjanvier_crowdin.crowdin_client.class">Crowdin\Client</parameter>
+        <parameter key="jjanvier_crowdin.archive.class">Jjanvier\Bundle\CrowdinBundle\Archive\Archive</parameter>
         <parameter key="jjanvier_crowdin.translation.finder.class">Jjanvier\Bundle\CrowdinBundle\Translation\TranslationFinder</parameter>
         <parameter key="jjanvier_crowdin.translation.mapper.class">Jjanvier\Bundle\CrowdinBundle\Translation\TranslationMapper</parameter>
     </parameters>
@@ -14,6 +15,13 @@
         <service id="jjanvier_crowdin.crowdin_client" class="%jjanvier_crowdin.crowdin_client.class%">
             <argument>%jjanvier_crowdin.crowdin.project_identifier%</argument>
             <argument>%jjanvier_crowdin.crowdin.api_key%</argument>
+        </service>
+
+        <service id="jjanvier_crowdin.archive" class="%jjanvier_crowdin.archive.class%">
+            <argument>%jjanvier_crowdin.archive.path%</argument>
+            <argument>%jjanvier_crowdin.project.path%</argument>
+            <argument>%jjanvier_crowdin.archive.clean%</argument>
+            <argument>%jjanvier_crowdin.archive.header%</argument>
         </service>
 
         <service id="jjanvier_crowdin.translation.finder" class="%jjanvier_crowdin.translation.finder.class%">
