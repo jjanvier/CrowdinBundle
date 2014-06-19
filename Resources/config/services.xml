@@ -8,6 +8,8 @@
         <parameter key="jjanvier_crowdin.crowdin_client.class">Crowdin\Client</parameter>
         <parameter key="jjanvier_crowdin.archive.class">Jjanvier\Bundle\CrowdinBundle\Archive\Archive</parameter>
         <parameter key="jjanvier_crowdin.synchronizer.git_handler.class">Jjanvier\Bundle\CrowdinBundle\Synchronizer\GitHandler</parameter>
+        <parameter key="jjanvier_crowdin.synchronizer.down_synchronizer.class">Jjanvier\Bundle\CrowdinBundle\Synchronizer\DownSynchronizer</parameter>
+        <parameter key="jjanvier_crowdin.synchronizer.up_synchronizer.class">Jjanvier\Bundle\CrowdinBundle\Synchronizer\UpSynchronizer</parameter>
         <parameter key="jjanvier_crowdin.translation.finder.class">Jjanvier\Bundle\CrowdinBundle\Translation\TranslationFinder</parameter>
         <parameter key="jjanvier_crowdin.translation.mapper.class">Jjanvier\Bundle\CrowdinBundle\Translation\TranslationMapper</parameter>
     </parameters>
@@ -25,6 +27,13 @@
             <argument>%jjanvier_crowdin.archive.header%</argument>
         </service>
 
+        <service id="jjanvier_crowdin.synchronizer.down_synchronizer" class="%jjanvier_crowdin.synchronizer.down_synchronizer.class%">
+            <argument type="service" id="jjanvier_crowdin.translation.finder" />
+            <argument type="service" id="jjanvier_crowdin.archive" />
+            <argument type="service" id="jjanvier_crowdin.synchronizer.git_handler" />
+            <argument type="service" id="jjanvier_crowdin.crowdin_client" />
+        </service>
+
         <service id="jjanvier_crowdin.synchronizer.git_handler" class="%jjanvier_crowdin.synchronizer.git_handler.class%">
             <argument>%jjanvier_crowdin.project.path%</argument>
             <argument>%jjanvier_crowdin.github.username%</argument>
@@ -37,7 +46,7 @@
         </service>
 
         <service id="jjanvier_crowdin.translation.finder" class="%jjanvier_crowdin.translation.finder.class%">
-            <argument>%jjanvier_crowdin.project.path%/src/*/*/*/*/Resources/translations</argument>
+            <argument>%jjanvier_crowdin.project.path%/src/*/*/*/Resources/translations</argument>
             <argument>%jjanvier_crowdin.project.default_locale%</argument>
         </service>
 

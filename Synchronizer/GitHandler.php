@@ -173,16 +173,16 @@ class GitHandler
     /**
      * Create a pull request on Github
      *
-     * @param string $localBranch
-     * @param string $remoteBranch
+     * @param string $baseBranch branch where your changes are implemented
+     * @param string $headBranch branch you want your changes pulled into
      */
-    public function createPullRequest($localBranch, $remoteBranch = 'branch')
+    public function createPullRequest($headBranch, $baseBranch = 'master')
     {
         /** @var PullRequest $api */
         $api = $this->githubClient->api('pull_request');
         $api->create($this->username, $this->project, array(
-                'base'  => $remoteBranch,
-                'head'  => $localBranch,
+                'base'  => $baseBranch,
+                'head'  => sprintf('%s:%s', $this->username, $headBranch),
                 'title' => $this->pullRequestTitle,
                 'body'  => $this->pullRequestMessage
             )
