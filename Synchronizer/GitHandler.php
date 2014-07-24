@@ -23,6 +23,16 @@ class GitHandler
     protected $username;
 
     /**
+     * @var string Git authentication URL token
+     */
+    protected $token;
+
+    /**
+     * @var string Git vendor to commit on
+     */
+    protected $organization;
+
+    /**
      * @var string Git project to commit on
      */
     protected $project;
@@ -60,6 +70,8 @@ class GitHandler
     /**
      * @param string $localPath
      * @param string $username
+     * @param string $token
+     * @param string $organization
      * @param string $project
      * @param string $originBranch
      * @param string $pullRequestTitle
@@ -72,6 +84,8 @@ class GitHandler
     public function __construct(
         $localPath,
         $username,
+        $token,
+        $organization,
         $project,
         $originBranch = 'origin',
         $pullRequestTitle = '[AUTO] Updating translations from Crowdin',
@@ -87,11 +101,14 @@ class GitHandler
         $this->branchPrefix = $branchPrefix;
         $this->commitMessage = $commitMessage;
         $this->username = $username;
+        $this->token = $token;
+        $this->organization = $organization;
         $this->project = $project;
         $this->originBranch = $originBranch;
         $this->pullRequestTitle = $pullRequestTitle;
         $this->pullRequestMessage = $pullRequestMessage;
         $this->githubClient = new GithubClient();
+        $this->githubClient->authenticate($this->token, null, GithubClient::AUTH_HTTP_TOKEN);
     }
 
     /**
@@ -173,14 +190,14 @@ class GitHandler
     /**
      * Create a pull request on Github
      *
-     * @param string $baseBranch branch where your changes are implemented
-     * @param string $headBranch branch you want your changes pulled into
+     * @param string $headBranch branch where your changes are implemented
+     * @param string $baseBranch branch you want your changes pulled into
      */
     public function createPullRequest($headBranch, $baseBranch = 'master')
     {
         /** @var PullRequest $api */
         $api = $this->githubClient->api('pull_request');
-        $api->create($this->username, $this->project, array(
+        $api->create($this->organization, $this->project, array(
                 'base'  => $baseBranch,
                 'head'  => sprintf('%s:%s', $this->username, $headBranch),
                 'title' => $this->pullRequestTitle,
