@@ -54,5 +54,12 @@
         </service>
 
         <service id="jjanvier_crowdin.translation.mapper" class="%jjanvier_crowdin.translation.mapper.class%" />
+
+        <service id="jjanvier_crowdin.synchronizer.up_synchronizer" class="%jjanvier_crowdin.synchronizer.up_synchronizer.class%">
+            <argument type="service" id="jjanvier_crowdin.crowdin_client" />
+            <argument type="service" id="jjanvier_crowdin.synchronizer.git_handler" />
+            <argument type="service" id="jjanvier_crowdin.translation.finder" />
+            <argument type="service" id="jjanvier_crowdin.translation.mapper" />
+        </service>
     </services>
 </container>

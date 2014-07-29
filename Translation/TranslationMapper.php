@@ -26,4 +26,4 @@ class TranslationMapper implements TranslationMapperInterface
     {
         throw new \LogicException('To be implemented');
     }
-} 
+}
