@@ -23,6 +23,11 @@ class GitHandler
     protected $username;
 
     /**
+     * @var string Git email to commit with
+     */
+    protected $email;
+
+    /**
      * @var string Git authentication URL token
      */
     protected $token;
@@ -69,6 +74,7 @@ class GitHandler
 
     /**
      * @param string $username
+     * @param string $email
      * @param string $token
      * @param string $organization
      * @param string $project
@@ -82,6 +88,7 @@ class GitHandler
      */
     public function __construct(
         $username,
+        $email,
         $token,
         $organization,
         $project,
@@ -94,6 +101,7 @@ class GitHandler
         $this->branchPrefix = $branchPrefix;
         $this->commitMessage = $commitMessage;
         $this->username = $username;
+        $this->email = $email;
         $this->token = $token;
         $this->organization = $organization;
         $this->project = $project;
@@ -207,6 +215,8 @@ class GitHandler
         $url = sprintf('https://github.com/%s/%s.git', $this->organization, $this->project);
 
         $this->systemLog(sprintf('git clone %s %s', $url, $this->projectPath));
+        $this->systemLog(sprintf('cd %s && git config user.name "%s"', $this->projectPath, $this->username));
+        $this->systemLog(sprintf('cd %s && git config user.email %s', $this->projectPath, $this->email));
     }
 
     /**
@@ -226,7 +236,8 @@ class GitHandler
      */
     protected function systemLog($command)
     {
+        echo sprintf("\nExecuting command: %s... ", $command);
         system($command, $status);
-        echo sprintf('Executing command: %s (Result: %d)\n', $command, $status);
+        echo sprintf("\nDone with result %d.", $status);
     }
 }

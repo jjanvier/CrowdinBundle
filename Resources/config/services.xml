@@ -36,6 +36,7 @@
 
         <service id="jjanvier_crowdin.synchronizer.git_handler" class="%jjanvier_crowdin.synchronizer.git_handler.class%">
             <argument>%jjanvier_crowdin.github.username%</argument>
+            <argument>%jjanvier_crowdin.github.email%</argument>
             <argument>%jjanvier_crowdin.github.token%</argument>
             <argument>%jjanvier_crowdin.github.organization%</argument>
             <argument>%jjanvier_crowdin.github.project%</argument>

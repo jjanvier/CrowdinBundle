@@ -63,6 +63,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('username')->cannotBeEmpty()->end()
+                        ->scalarNode('email')->cannotBeEmpty()->end()
                         ->scalarNode('token')->cannotBeEmpty()->end()
                         ->scalarNode('organization')->cannotBeEmpty()->end()
                         ->scalarNode('project')->cannotBeEmpty()->end()
