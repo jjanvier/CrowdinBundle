@@ -16,6 +16,9 @@ class DownSynchronizer implements SynchronizerInterface
 {
     const CROWDIN_PACKAGE = 'all.zip';
 
+    /** @var string */
+    protected $id;
+
     /**
      * @var CrowdinClient
      */
@@ -52,6 +55,7 @@ class DownSynchronizer implements SynchronizerInterface
         $this->archive = $archive;
         $this->gitHandler = $gitHandler;
         $this->crowdinClient = $crowdinClient;
+        $this->id = uniqid();
     }
 
     /**
@@ -59,16 +63,19 @@ class DownSynchronizer implements SynchronizerInterface
      */
     public function synchronize()
     {
-        // download Crowdin translations
+        // init project
+        $projectDir = $this->createProjectDirectory();
+        $this->translationsFinder->setPath($projectDir);
+        $this->gitHandler->setProjectPath($projectDir);
+        $this->gitHandler->cloneProject();
+
+        // download and extract Crowdin translations
         $this->downloadPackage();
+        $this->extractPackage($projectDir);
 
         // create new local branch
         $branch = $this->gitHandler->getBranchName();
-        $this->gitHandler->pullMaster();
         $this->gitHandler->createBranch($branch);
-
-        // extract Crowdin package
-        $this->extractPackage();
 
         // commit and push
         $this->resetDefaultLocaleTranslations();
@@ -87,15 +94,7 @@ class DownSynchronizer implements SynchronizerInterface
     protected function downloadPackage()
     {
         $this->crowdinClient->api('export')->execute();
-        $path = $this->archive->getPath();
-
-        if (!is_dir($path) && false === @mkdir($path, 0777, true)) {
-            throw new \Exception(sprintf('Can not create the directory %s.', $path));
-        }
-
-        if (!is_writable($path)) {
-            throw new \Exception(sprintf('The directory %s is not writable.', $path));
-        }
+        $path = $this->createArchiveDirectory();
 
         /** @var Download $download */
         $download = $this->crowdinClient->api('download');
@@ -104,13 +103,17 @@ class DownSynchronizer implements SynchronizerInterface
         $download->execute();
 
         $this->archive->setFilename(self::CROWDIN_PACKAGE);
+        $this->archive->setPath($path);
     }
 
     /**
      * Extract the Crowdin package
+     *
+     * @param $projectPath
      */
-    protected function extractPackage()
+    protected function extractPackage($projectPath)
     {
+        $this->archive->setExtractPath($projectPath);
         $this->archive->extract()->remove();
     }
 
@@ -123,5 +126,33 @@ class DownSynchronizer implements SynchronizerInterface
         foreach ($translations as $translation) {
             $this->gitHandler->reset($translation->getPathname());
         }
+    }
+
+    /**
+     * Create the project directory
+     * TODO: use the config parameter
+     *
+     * @return string
+     */
+    protected function createProjectDirectory()
+    {
+        $dir = sprintf('/tmp/crowdin/project/%s/', $this->id);
+        exec(sprintf('mkdir -p %s', $dir));
+
+        return $dir;
+    }
+
+    /**
+     * Create the archive directory
+     * TODO: use the config parameter
+     *
+     * @return string
+     */
+    protected function createArchiveDirectory()
+    {
+        $dir = sprintf('/tmp/crowdin/archive/%s/', $this->id);
+        exec(sprintf('mkdir -p %s', $dir));
+
+        return $dir;
     }
 }

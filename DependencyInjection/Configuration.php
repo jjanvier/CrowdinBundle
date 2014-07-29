@@ -48,7 +48,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('project')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('path')->defaultNull()->cannotBeEmpty()->end()
+                        ->scalarNode('path')->defaultValue('/tmp/crowdin')->cannotBeEmpty()->end()
                         ->scalarNode('default_locale')->defaultValue('en')->cannotBeEmpty()->end()
                     ->end()
                 ->end()

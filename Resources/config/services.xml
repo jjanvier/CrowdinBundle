@@ -35,7 +35,6 @@
         </service>
 
         <service id="jjanvier_crowdin.synchronizer.git_handler" class="%jjanvier_crowdin.synchronizer.git_handler.class%">
-            <argument>%jjanvier_crowdin.project.path%</argument>
             <argument>%jjanvier_crowdin.github.username%</argument>
             <argument>%jjanvier_crowdin.github.token%</argument>
             <argument>%jjanvier_crowdin.github.organization%</argument>
@@ -48,7 +47,8 @@
         </service>
 
         <service id="jjanvier_crowdin.translation.finder" class="%jjanvier_crowdin.translation.finder.class%">
-            <argument>%jjanvier_crowdin.project.path%/src/*/*/*/Resources/translations</argument>
+            <argument>%jjanvier_crowdin.project.path%</argument>
+            <argument>src/*/*/*/Resources/translations</argument>
             <argument>%jjanvier_crowdin.project.default_locale%</argument>
         </service>
 
