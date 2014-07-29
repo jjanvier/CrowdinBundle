@@ -56,13 +56,6 @@ class Archive implements ArchiveInterface
      */
     public function __construct($path, $extractPath, $clean = false, $header = null)
     {
-        if (false === realpath($path)) {
-            throw new \Exception(sprintf('Please provide a valid path instead of %s.', $path));
-        }
-        if (false === realpath($extractPath)) {
-            throw new \Exception(sprintf('Please provide a valid path instead of %s.', $extractPath));
-        }
-
         $this->files = array();
         $this->path = realpath($path);
         $this->extractPath = realpath($extractPath);
@@ -75,6 +68,13 @@ class Archive implements ArchiveInterface
      */
     public function extract()
     {
+        if (false === realpath($this->path)) {
+            throw new \Exception(sprintf('Please provide a valid path instead of %s.', $this->path));
+        }
+        if (false === realpath($this->extractPath)) {
+            throw new \Exception(sprintf('Please provide a valid path instead of %s.', $this->extractPath));
+        }
+
         $zip = new \ZipArchive();
 
         if (null === $this->filename) {
