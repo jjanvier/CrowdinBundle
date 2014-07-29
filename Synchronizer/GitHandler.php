@@ -15,7 +15,7 @@ class GitHandler
     /**
      * @var string local path of the project
      */
-    protected $localPath;
+    protected $projectPath;
 
     /**
      * @var string Git username to commit with
@@ -63,12 +63,11 @@ class GitHandler
     protected $pullRequestMessage;
 
     /**
-     * @var GithubClient Gtihub client
+     * @var GithubClient Github client
      */
     protected $githubClient;
 
     /**
-     * @param string $localPath
      * @param string $username
      * @param string $token
      * @param string $organization
@@ -82,7 +81,6 @@ class GitHandler
      * @throws \Exception if the project path is not a Git repository
      */
     public function __construct(
-        $localPath,
         $username,
         $token,
         $organization,
@@ -93,11 +91,6 @@ class GitHandler
         $branchPrefix = 'crowdin',
         $commitMessage = 'Updating translations from Crowdin'
     ) {
-        if (!is_dir(sprintf('%s/.git', $localPath))) {
-            throw new \Exception('Please configure your project in the directory %s first.', $this->localPath);
-        }
-
-        $this->localPath = $localPath;
         $this->branchPrefix = $branchPrefix;
         $this->commitMessage = $commitMessage;
         $this->username = $username;
@@ -107,8 +100,9 @@ class GitHandler
         $this->originBranch = $originBranch;
         $this->pullRequestTitle = $pullRequestTitle;
         $this->pullRequestMessage = $pullRequestMessage;
+
         $this->githubClient = new GithubClient();
-        $this->githubClient->authenticate($this->token, null, GithubClient::AUTH_HTTP_TOKEN);
+        $this->authenticate();
     }
 
     /**
@@ -120,17 +114,8 @@ class GitHandler
     {
         if (is_file($file)) {
             $cmd = 'cd %s && git checkout HEAD -- %s';
-            exec(sprintf($cmd, $this->localPath, $file));
+            $this->systemLog(sprintf($cmd, $this->projectPath, $file));
         }
-    }
-
-    /**
-     * Pull master branch of the project
-     */
-    public function pullMaster()
-    {
-        $cmd = 'cd %s && git checkout master && git pull origin master';
-        exec(sprintf($cmd, $this->localPath));
     }
 
     /**
@@ -141,7 +126,7 @@ class GitHandler
     public function createBranch($branch)
     {
         $cmd = 'cd %s && git checkout -b %s && git add .';
-        exec(sprintf($cmd, $this->localPath, $branch));
+        $this->systemLog(sprintf($cmd, $this->projectPath, $branch));
     }
 
     /**
@@ -152,7 +137,7 @@ class GitHandler
     public function deleteBranch($branch)
     {
         $cmd = 'cd %s && git checkout master && git branch -D %s';
-        exec(sprintf($cmd, $this->localPath, $branch));
+        $this->systemLog(sprintf($cmd, $this->projectPath, $branch));
     }
 
     /**
@@ -163,7 +148,7 @@ class GitHandler
     public function commit($message = null)
     {
         $cmd = 'cd %s && git add . && git commit -m "%s"';
-        exec(sprintf($cmd, $this->localPath, $message ?: $this->commitMessage));
+        $this->systemLog(sprintf($cmd, $this->projectPath, $message ?: $this->commitMessage));
     }
 
     /**
@@ -174,7 +159,7 @@ class GitHandler
     public function pushBranch($branch)
     {
         $cmd = 'cd %s && git push origin %s';
-        exec(sprintf($cmd, $this->localPath, $branch));
+        $this->systemLog(sprintf($cmd, $this->projectPath, $branch));
     }
 
     /**
@@ -205,4 +190,43 @@ class GitHandler
             )
         );
     }
-} 
+
+    /**
+     * Authenticate the user on Github.
+     */
+    public function authenticate()
+    {
+        $this->githubClient->authenticate($this->token, null, GithubClient::AUTH_HTTP_TOKEN);
+    }
+
+    /**
+     * Clone the Github project
+     */
+    public function cloneProject()
+    {
+        $url = sprintf('https://github.com/%s/%s.git', $this->organization, $this->project);
+
+        $this->systemLog(sprintf('git clone %s %s', $url, $this->projectPath));
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return GitHandler
+     */
+    public function setProjectPath($path)
+    {
+        $this->projectPath = $path;
+
+        return $this;
+    }
+
+    /**
+     * Execute a command and log it.
+     */
+    protected function systemLog($command)
+    {
+        system($command, $status);
+        echo sprintf('Executing command: %s (Result: %d)\n', $command, $status);
+    }
+}
