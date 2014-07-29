@@ -24,4 +24,22 @@ interface TranslationFinderInterface
      * @return Finder|\SplFileInfo[]
      */
     public function getDefaultLocaleTranslations();
-} 
+
+    /**
+     * Set the path where to search for the translations
+     *
+     * @param string $path
+     *
+     * @return TranslationFinderInterface
+     */
+    public function setPath($path);
+
+    /**
+     * Set the pattern used to find translations
+     *
+     * @param string $pattern
+     *
+     * @return TranslationFinderInterface
+     */
+    public function setPattern($pattern);
+}
