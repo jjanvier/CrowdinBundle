@@ -108,4 +108,12 @@ class ExtractCommand extends ContainerAwareCommand
 
         return $command->run($input, $output);
     }
+
+    /**
+     * @return ArchiveInterface
+     */
+    protected function getArchiveService()
+    {
+        $this->getContainer()->get('jjanvier_crowdin.archive');
+    }
 }

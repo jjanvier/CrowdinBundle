@@ -212,11 +212,21 @@ class GitHandler
      */
     public function cloneProject()
     {
-        $url = sprintf('https://github.com/%s/%s.git', $this->organization, $this->project);
+        $origin = sprintf('https://github.com/%s/%s.git', $this->username, $this->project);
+        $upstream = sprintf('https://github.com/%s/%s.git', $this->organization, $this->project);
 
-        $this->systemLog(sprintf('git clone %s %s', $url, $this->projectPath));
+        $this->systemLog(sprintf('git clone %s %s', $origin, $this->projectPath));
         $this->systemLog(sprintf('cd %s && git config user.name "%s"', $this->projectPath, $this->username));
         $this->systemLog(sprintf('cd %s && git config user.email %s', $this->projectPath, $this->email));
+        $this->systemLog(sprintf('cd %s && git remote add upstream %s', $this->projectPath, $upstream));
+        $this->systemLog(sprintf('cd %s && git fetch upstream', $this->projectPath));
+        $this->systemLog(sprintf('cd %s && git merge upstream/master', $this->projectPath));
+        $this->systemLog(sprintf('cd %s && git push origin master', $this->projectPath));
+    }
+
+    public function mergeUpstream()
+    {
+
     }
 
     /**
