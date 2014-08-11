@@ -11,8 +11,8 @@
 
 namespace Jjanvier\Bundle\CrowdinBundle\Command;
 
-use Jjanvier\Bundle\CrowdinBundle\Archive\Archive;
-use Jjanvier\Bundle\CrowdinBundle\Archive\ArchiveInterface;
+use Jjanvier\Library\Crowdin\Archive\Archive;
+use Jjanvier\Library\Crowdin\Archive\ArchiveInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;

@@ -11,7 +11,7 @@
 
 namespace Jjanvier\Bundle\CrowdinBundle\Command;
 
-use Jjanvier\Bundle\CrowdinBundle\Synchronizer\UpSynchronizer;
+use Jjanvier\Library\Crowdin\Synchronizer\UpSynchronizer;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

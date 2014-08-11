@@ -6,12 +6,12 @@
 
     <parameters>
         <parameter key="jjanvier_crowdin.crowdin_client.class">Crowdin\Client</parameter>
-        <parameter key="jjanvier_crowdin.archive.class">Jjanvier\Bundle\CrowdinBundle\Archive\Archive</parameter>
-        <parameter key="jjanvier_crowdin.synchronizer.git_handler.class">Jjanvier\Bundle\CrowdinBundle\Synchronizer\GitHandler</parameter>
-        <parameter key="jjanvier_crowdin.synchronizer.down_synchronizer.class">Jjanvier\Bundle\CrowdinBundle\Synchronizer\DownSynchronizer</parameter>
-        <parameter key="jjanvier_crowdin.synchronizer.up_synchronizer.class">Jjanvier\Bundle\CrowdinBundle\Synchronizer\UpSynchronizer</parameter>
-        <parameter key="jjanvier_crowdin.translation.finder.class">Jjanvier\Bundle\CrowdinBundle\Translation\TranslationFinder</parameter>
-        <parameter key="jjanvier_crowdin.translation.mapper.class">Jjanvier\Bundle\CrowdinBundle\Translation\TranslationMapper</parameter>
+        <parameter key="jjanvier_crowdin.archive.class">Jjanvier\Library\Crowdin\Archive\Archive</parameter>
+        <parameter key="jjanvier_crowdin.synchronizer.git_handler.class">Jjanvier\Library\Crowdin\Synchronizer\GitHandler</parameter>
+        <parameter key="jjanvier_crowdin.synchronizer.down_synchronizer.class">Jjanvier\Library\Crowdin\Synchronizer\DownSynchronizer</parameter>
+        <parameter key="jjanvier_crowdin.synchronizer.up_synchronizer.class">Jjanvier\Library\Crowdin\Synchronizer\UpSynchronizer</parameter>
+        <parameter key="jjanvier_crowdin.translation.finder.class">Jjanvier\Library\Crowdin\Translation\TranslationFinder</parameter>
+        <parameter key="jjanvier_crowdin.translation.mapper.class">Jjanvier\Library\Crowdin\Translation\TranslationMapper</parameter>
     </parameters>
 
     <services>
