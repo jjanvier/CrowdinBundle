@@ -52,4 +52,4 @@ abstract class AbstractApiCommand extends ContainerAwareCommand
 
         return $this;
     }
-} 
+}

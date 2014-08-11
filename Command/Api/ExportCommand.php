@@ -13,7 +13,6 @@ namespace Jjanvier\Bundle\CrowdinBundle\Command\Api;
 
 use Crowdin\Api\Export;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
