@@ -12,6 +12,13 @@
         <parameter key="jjanvier_crowdin.synchronizer.up_synchronizer.class">Jjanvier\Library\Crowdin\Synchronizer\UpSynchronizer</parameter>
         <parameter key="jjanvier_crowdin.translation.finder.class">Jjanvier\Library\Crowdin\Translation\TranslationFinder</parameter>
         <parameter key="jjanvier_crowdin.translation.mapper.class">Jjanvier\Library\Crowdin\Translation\TranslationMapper</parameter>
+
+        <!-- Parameters definitions. Should be overridden by bundle configuration, if needed. -->
+        <parameter key="jjanvier_crowdin.github.username">null</parameter>
+        <parameter key="jjanvier_crowdin.github.email">null</parameter>
+        <parameter key="jjanvier_crowdin.github.token">null</parameter>
+        <parameter key="jjanvier_crowdin.github.organization">null</parameter>
+        <parameter key="jjanvier_crowdin.github.project">null</parameter>
     </parameters>
 
     <services>
