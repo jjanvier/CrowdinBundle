@@ -56,15 +56,16 @@ class ExtractCommand extends ContainerAwareCommand
 
         $destination = $input->getOption('path');
         $file = $input->getOption('language').'.zip';
-        $archivePath = sprintf('%s/%s', $destination, $file);
 
         $archive = new Archive(
-            $archivePath,
+            $destination,
             $destination,
             $input->getOption('clean'),
             $input->getOption('header')
         );
+        $archive->setFilename($file);
         $archive->extract()->remove();
+
 
         return 0;
     }
