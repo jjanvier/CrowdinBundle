@@ -37,7 +37,7 @@ class FileUpdateCommand extends AbstractApiCommand
         $updateFile = $this->getClient()->api('update-file');
         $updateFile->addTranslation(
             $input->getArgument('file'),
-            $input->getArgument('file'),
+            $input->getArgument('crowdinPath'),
             $input->getOption('exportPattern'),
             $input->getOption('title')
         );
