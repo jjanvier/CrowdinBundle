@@ -52,8 +52,9 @@ Add the following configuration to your `config.yml` :
 
 ```yaml
     jjanvier_crowdin:
-        crowdin_api_key: %crowdin_api_key%
-        crowdin_project_identifier: %crowdin_project_identifier%
+        crowdin:
+            api_key: %crowdin_api_key%
+            project_identifier: %crowdin_project_identifier%
 ```
 
 Add the following keys to your `parameters.yml`:
